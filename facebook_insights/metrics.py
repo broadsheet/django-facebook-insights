@@ -94,7 +94,11 @@ def fetch_metrics(graph_id, metrics):
             raise GraphAPIError(body)
         data = body['data']
         if not data:
-            raise EmptyData
+            # We need a better middle ground for this but just
+            #   raising exceptions doesn't work when some of a
+            #   set can legitimately be empty
+            continue
+            # raise EmptyData
         rearranged_values = {}
         for datum in data:
             name = datum['name']
