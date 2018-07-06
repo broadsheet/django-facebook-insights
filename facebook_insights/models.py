@@ -36,7 +36,11 @@ class Insights(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(Insights, self).__init__(*args, **kwargs)
-        self._graph_id = self.get_graph_id()
+        try:
+            self._graph_id = self.get_graph_id()
+        except:
+            self._graph_id = None
+
         try:
             all_field_names = [field.name for field in self._meta.get_fields()]
         except AttributeError:  # Django 1.7
