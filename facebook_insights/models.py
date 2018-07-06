@@ -107,6 +107,11 @@ class Insights(models.Model):
     def get_graph_id(self):
         """Get graph ID of the object for which metrics are to be collected."""
         if self.RELATED_OBJECT_FIELD:
+            print "REL: %s" % self.RELATED_OBJECT_FIELD
+            print "GPD: %s" % self.GRAPH_ID_FIELD
+            print "SLF: %s" % self.__dict__
+            print "OBJ: %s" % getattr(self, self.RELATED_OBJECT_FIELD).__dict__
+            print getattr(getattr(self, self.RELATED_OBJECT_FIELD), self.GRAPH_ID_FIELD)
             related_object = getattr(self, self.RELATED_OBJECT_FIELD)
             return getattr(related_object, self.GRAPH_ID_FIELD)
         return getattr(self, self.GRAPH_ID_FIELD)

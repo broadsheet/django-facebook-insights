@@ -84,6 +84,11 @@ def fetch_metrics(graph_id, metrics):
         connection_name='',
         batch=json.dumps(batch),
     )
+
+    import pprint
+    pprint.pprint(batch)
+    pprint.pprint(batch_response)
+
     extracted_metrics = {}
     for response in batch_response:
         body = json.loads(response['body'])
