@@ -53,7 +53,7 @@ api_version = getattr(settings, 'FACEBOOK_INSIGHTS_API_VERSION', None)
 graph_api = GraphAPI(access_token=access_token, version=api_version)
 
 
-def fetch_metrics(graph_id, metrics):
+def fetch_metrics(graph_id, metrics, token=None):
     """Fetch Facebook Insights metrics for an object with a given id.
 
     Parameters
@@ -62,6 +62,8 @@ def fetch_metrics(graph_id, metrics):
         The Facebook ID of a Graph API object.
     metrics : iterable of str
         The object's metrics to fetch (e.g. 'page_engaged_users').
+    token: str
+        A Facebook Graph API access token
 
     Returns
     -------
@@ -79,6 +81,12 @@ def fetch_metrics(graph_id, metrics):
             'relative_url': '{}/insights/{}/'.format(graph_id, metric)
         }
         batch.append(request_data)
+
+    # ##TODON'T##
+    global graph_api
+    if token and (token != graph_api.access_token):
+        graph_api = GraphAPI(access_token=token, version=api_version)
+
     batch_response = graph_api.put_object(
         parent_object='/',
         connection_name='',

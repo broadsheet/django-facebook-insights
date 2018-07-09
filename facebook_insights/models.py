@@ -60,7 +60,7 @@ class Insights(models.Model):
         )
 
 
-    def fetch(self, metrics=None):
+    def fetch(self, metrics=None, token=None):
         """Fetch metrics and put them into corresponding fields.
 
         Parameters
@@ -73,7 +73,7 @@ class Insights(models.Model):
 
         """
         metrics_to_fetch = metrics or self.METRICS
-        fetched_metrics = fetch_metrics(self._graph_id, metrics_to_fetch)
+        fetched_metrics = fetch_metrics(self._graph_id, metrics_to_fetch, token=token)
         for metric in fetched_metrics.values():
             field_name = self.get_field_name(metric)
             field_value = self.get_field_value(metric)
